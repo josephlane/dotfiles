@@ -2,7 +2,7 @@
 "
 "   Name:          Joseph Lane 
 "   Type:          .vimrc Configuration
-"   Last Updated:  1/13/19
+"   Last Updated:  1/6/19
 "   Email:         jlane.pro@gmail.com
 "
 """""""""""""""""""""""""""""""""""""""""""
@@ -19,20 +19,35 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" let Vundle manage Vundle, required
+" Package Manager 
 Plugin 'VundleVim/Vundle.vim'
 
-" Improves Functionality
+" Directory Browswer
 Plugin 'scrooloose/nerdtree'
+" Syntax Cheker
 Plugin 'scrooloose/syntastic'
-Plugin 'valloric/youcompleteme'
+" GIT Wrapper
 Plugin 'tpope/vim-fugitive'
-
-" Python Specific
+" Fuzzy Searcher
+Plugin 'ctrlpvim/ctrlp.vim'
+" Enhance Ruby Dev
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'tpope/vim-rails'
+" Auto Completer
+Plugin 'Shougo/neocomplete.vim'
+" Python Standards Lib 
 Plugin 'nvie/vim-flake8'
-
+" Code Snippets
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
 " UI Related
 Plugin 'altercation/vim-colors-solarized'
+
+source /usr/local/lib/python2.7/site-packages/powerline/bindings/vim/plugin/powerline.vim
+set laststatus=2
+let g:Powerline_symbols = 'fancy'
+set encoding=utf-8
+set guifont=Menlo
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -60,8 +75,9 @@ set expandtab
 set autoindent
 set fileformat=unix
 
-" Always show the status line
-set laststatus=2
+" Enable spell checking
+:setlocal spell
+:setlocal spell spelllang=en_us
 
 " Enable highligting of the current line
 set cursorline
@@ -73,14 +89,41 @@ set encoding=utf-8
 set backspace=indent,eol,start
 
 " Syntastic Configuration
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 
+set nocompatible      " We're running Vim, not Vi!
+syntax on             " Enable syntax highlighting
+filetype on           " Enable filetype detection
+filetype indent on    " Enable filetype-specific indenting
+filetype plugin on    " Enable filetype-specific plugins
+
+"""""""""""""""""""""""""""""""""""""
+"
+"           RUBY SPECIFIC
+"
+""""""""""""""""""""""""""""""""""""""
+autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
+autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
+
+
+"""""""""""""""""""""""""""""""""""""
+"
+"      CTRL+P / RIP GREP
+"
+""""""""""""""""""""""""""""""""""""""
+if executable('rg')
+    set grepprg=rg\ --color=never
+    let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+    let g:ctrlp_use_caching = 0
+endif
+
+set wildignore+=*/.git/*,*/tmp/*,*.swp
 
 """""""""""""""""""""""""""""""""""""
 "
